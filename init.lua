@@ -20,8 +20,8 @@ local createServer = net.createServer
 local tlsWrap = require('coro-tls').wrap
 local wrapper = require('coro-wrapper')
 
-function exports.createServer(host, port, onConnect)
-  createServer({host=host,port=port}, function (rawRead, rawWrite, socket)
+function exports.createServer(options, onConnect)
+  createServer(options, function (rawRead, rawWrite, socket)
     local read = wrapper.reader(rawRead, httpCodec.decoder())
     local write = wrapper.writer(rawWrite, httpCodec.encoder())
     for head in read do
